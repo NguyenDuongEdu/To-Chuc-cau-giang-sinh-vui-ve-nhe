@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>"Giáng Sinh an lành nhé! 😊"
+    </title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans', sans-serif;
+            height: 100%;
+        }
+        .gradient-background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #FF69B4, #FF85C1, #FFC0CB);
+            z-index: -2;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .btn {
+            background-color: #FF69B4;
+            color: white;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #FF85C1;
+        }
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+        .hidden-btn {
+            display: none;
+        }
+        #play-button {
+            display: block;
+            font-size: 36px; 
+            padding: 20px 40px; 
+            background-color: pink;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-image: radial-gradient(white 10%, transparent 11%);
+            background-size: 20px 20px; 
+        }
+    </style>
+</head>
+<body>
+    <audio id="background-music" src="christmas.mp3" loop></audio>
+    <div class="gradient-background"></div>
+    <canvas id="snow-canvas"></canvas>
+    <button id="play-button">BẤM VÀO ĐÂY</button>
+    <iframe id="page1" src="page1.html" style="display: none;"></iframe>
+    <iframe id="page2" src="page2.html" style="display: none;"></iframe>
+    <script>
+        const audio = document.getElementById('background-music');
+        const playButton = document.getElementById('play-button');
+        const iframe1 = document.getElementById('page1');
+        playButton.style.display = 'block';
+        playButton.addEventListener('click', () => {
+            audio.play();
+            playButton.style.display = 'none';
+            iframe1.style.display = 'block';
+            iframe1.contentWindow.postMessage('startCountdown', '*');
+});
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const snowflakes = [];
+        class Snowflake {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 3 + 1;
+                this.speed = Math.random() * 1 + 0.5;
+                this.wind = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.y += this.speed;
+                this.x += this.wind;
+                if (this.y > canvas.height) {
+                    this.y = 0;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x > canvas.width) {
+                    this.x = 0;
+                } else if (this.x < 0) {
+                    this.x = canvas.width;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+        function createSnowflakes() {
+            for (let i = 0; i < 200; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
+        function updateSnowflakes() {
+            for (let flake of snowflakes) {
+                flake.update();
+            }
+        }
+        function drawSnowflakes() {
+            for (let flake of snowflakes) {
+                flake.draw();
+            }
+        }
+        function animateSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updateSnowflakes();
+            drawSnowflakes();
+            requestAnimationFrame(animateSnow);
+        }
+        createSnowflakes();
+        animateSnow();
+    </script>
+</body>
+</html>

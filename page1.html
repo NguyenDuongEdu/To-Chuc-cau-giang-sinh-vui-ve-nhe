@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas</title>
+    <style>
+        body {
+            background-color: #000000;
+            overflow: hidden;
+            transition: opacity 1s ease-out;
+        }
+        h1 {
+            font-family: 'Lobster', cursive;
+            font-size: 80px;
+            text-align: center;
+            color: white;
+            letter-spacing: 3px;
+        }
+        .drop {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            border-radius: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 10px #FFF
+        }
+        .animate {
+            animation: falling 5s infinite ease-in;
+        }
+        @keyframes falling {
+            0% {
+                top: -10px;
+            }
+            10% {
+                transform: translateX(-5px)
+            }
+            20% {
+                transform: translateX(5px)
+            }
+            30% {
+                transform: translateX(-5px)
+            }
+            40% {
+                transform: translateX(5px)
+            }
+            60% {
+                transform: translateX(-5px)
+            }
+            70% {
+                transform: translateX(5px)
+            }
+            80% {
+                transform: translateX(-5px)
+            }
+            90% {
+                transform: translateX(5px)
+            }
+            95% {
+                opacity: 1
+            }
+            100% {
+                top: 95vh;
+                opacity: 0;
+            }
+        }
+        .line {
+            text-align: center; 
+        }
+        .line li {
+            position: relative;
+            margin: 0 15px;
+            list-style: none;
+            padding: 0;
+            display: inline-block;
+            width: 12px;
+            height: 28px;
+            border-radius: 50%;
+            top: 35px;
+            background: #fff;
+        }
+        .line .red {
+            background-color: #fb4545;
+            animation: lightningRed 1s infinite;
+        }
+        .line .green {
+            background-color: #24D024;
+            animation: lightningGreen 1.5s infinite;
+        }
+        .line .yellow {
+            background-color: #fff952;
+            animation: lightningYellow 2s infinite;
+        }
+        .line .blue {
+            background-color: #0A53DE;
+            animation: lightningBlue 2.5s infinite;
+        }
+        .line .pink {
+            background-color: #f53896;
+            animation: lightningPink 2s infinite;
+        }
+        @keyframes lightningRed {
+            0% {
+                box-shadow: 5px 10px 35px 10px #fb4545;
+            }
+            50% {
+                box-shadow: none;
+            }
+            100% {
+                box-shadow: 5px 10px 35px 10px #fb4545;
+            }
+        }
+        @keyframes lightningGreen {
+            0% {
+                box-shadow: 5px 0 35px 10px #24D024;
+            }
+            50% {
+                box-shadow: none;
+            }
+            100% {
+                box-shadow: 5px 0 35px 10px #24D024;
+            }
+        }
+        @keyframes lightningYellow {
+            0% {
+                box-shadow: 5px 0 35px 10px #fff952;
+            }
+            50% {
+                box-shadow: none;
+            }
+            100% {
+                box-shadow: 5px 0 35px 10px #fff952;
+            }
+        }
+        @keyframes lightningBlue {
+            0% {
+                box-shadow: 5px 0 35px 10px #0A53DE;
+            }
+            50% {
+                box-shadow: none;
+            }
+            100% {
+                box-shadow: 5px 0 35px 10px #0A53DE;
+            }
+        }
+        @keyframes lightningPink {
+            0% {
+                box-shadow: 5px 0 35px 10px #f53896;
+            }
+            50% {
+                box-shadow: none;
+            }
+            100% {
+                box-shadow: 5px 0 35px 10px #f53896;
+            }
+        }
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Lobster', cursive;
+            font-size: 100px;
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <script>
+        setTimeout(() => {
+            document.body.style.opacity = "0"; // Làm mờ dần trang
+            setTimeout(() => {
+                window.location.href = "page2.html"; // Chuyển sang trang khác
+            }, 3000); // Đợi 1 giây để hoàn thành hiệu ứng mờ
+        }, 11000); // Sau 12 giây
+    </script>
+
+</head>
+<body>
+    <div class="light">
+        <ul class="line">
+            <li class="red"></li>
+            <li class="yellow"></li>
+            <li class="blue"></li>
+            <li class="pink"></li>
+            <li class="red"></li>
+            <li class="green"></li>
+            <li class="blue"></li>
+            <li class="yellow"></li>
+            <li class="red"></li>
+            <li class="pink"></li>
+            <li class="blue"></li>
+            <li class="yellow"></li>
+            <li class="red"></li>
+            <li class="green"></li>
+            <li class="blue"></li>
+            <li class="yellow"></li>
+            <li class="red"></li>
+            <li class="pink"></li>
+            <li class="green"></li>
+            <li class="blue"></li>
+            <li class="pink"></li>
+            <li class="red"></li>
+            <li class="green"></li>
+            <li class="blue"></li>
+        </ul>
+    </div>
+    <h1>Merry Christmas !</h1>
+    <div class="countdown" id="countdown"></div>
+    <script>
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        var limit_flake = 100;
+        setInterval(function() {
+            let dimension = randomInt(3, 9) + "px";
+            var flake = "<div class='drop animate' style='left:" + randomInt(10, window.innerWidth - 20) + "px;width:" + dimension + ";height:" + dimension + "'></div>";
+            document.body.insertAdjacentHTML('beforeend', flake);
+            var list_flake = document.querySelectorAll('.drop');
+            if (list_flake.length > limit_flake) list_flake[0].remove();
+        }, 100); 
+        let countdownElement = document.getElementById('countdown');
+        let countdownValue = 10;
+        function updateCountdown() {
+            if (countdownValue > 0) {
+                countdownElement.textContent = countdownValue;
+                countdownValue--;
+            } else {
+                countdownElement.textContent = "";
+            }
+        }
+        setInterval(updateCountdown, 1000); 
+    </script>
+      <iframe name="content" src="" width="100%" height="400px" frameborder="0"></iframe>
+</body>
+</html>
